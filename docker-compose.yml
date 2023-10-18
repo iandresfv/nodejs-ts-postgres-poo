@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+  server:
+    restart: on-failure
+    build: .
+    depends_on:
+      - postgres_db
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/usr/src/app/
+      - /usr/src/app/node_modules
+
+
+  postgres_db:
+    image: postgres:14.9-alpine
+    restart: always
+    env_file:
+      - .postgres_db.env
+    ports:
+      - '5432:5432'
+    volumes: 
+      - postgres_db:/var/lib/postgresql/data
+      - ./postgres_db/init.sql:/docker-entrypoint-initdb.d/init.sql
+volumes:
+  postgres_db:
+    driver: local

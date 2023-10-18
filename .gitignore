@@ -1,0 +1,8 @@
+# production build
+/dist
+
+# dependencies
+/node_modules
+
+# vscore settings
+.vscode
